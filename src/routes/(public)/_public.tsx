@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate, Outlet, useLocation } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate, Outlet, useLocation, redirect } from '@tanstack/react-router'
 import {
   LayoutDashboard,
   Search,
@@ -34,6 +34,22 @@ import {
 } from '#/components/ui/sidebar'
 
 export const Route = createFileRoute('/(public)/_public')({
+  beforeLoad: ({ location }) => {
+    const { accessToken } = useAuthStore.getState()
+    const isAuthPage = location.pathname.startsWith('/auth')
+
+    if (!accessToken && !isAuthPage) {
+      throw redirect({
+        to: '/auth',
+      })
+    }
+
+    if (accessToken && isAuthPage) {
+      throw redirect({
+        to: '/',
+      })
+    }
+  },
   component: LayoutComponent,
 })
 

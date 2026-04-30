@@ -18,6 +18,7 @@ import { Route as publicPublicAccountRouteImport } from './routes/(public)/_publ
 import { Route as publicPublicProfileIndexRouteImport } from './routes/(public)/_public/profile.index'
 import { Route as publicPublicAuthIndexRouteImport } from './routes/(public)/_public/auth/index'
 import { Route as publicPublicProfileProfileIdRouteImport } from './routes/(public)/_public/profile.$profileId'
+import { Route as publicPublicAuthCallbackRouteImport } from './routes/(public)/_public/auth/callback'
 
 const publicPublicRoute = publicPublicRouteImport.update({
   id: '/(public)/_public',
@@ -65,6 +66,12 @@ const publicPublicProfileProfileIdRoute =
     path: '/$profileId',
     getParentRoute: () => publicPublicProfileRoute,
   } as any)
+const publicPublicAuthCallbackRoute =
+  publicPublicAuthCallbackRouteImport.update({
+    id: '/auth/callback',
+    path: '/auth/callback',
+    getParentRoute: () => publicPublicRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/account': typeof publicPublicAccountRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof publicPublicProfileRouteWithChildren
   '/search': typeof publicPublicSearchRoute
   '/': typeof publicPublicIndexRoute
+  '/auth/callback': typeof publicPublicAuthCallbackRoute
   '/profile/$profileId': typeof publicPublicProfileProfileIdRoute
   '/auth/': typeof publicPublicAuthIndexRoute
   '/profile/': typeof publicPublicProfileIndexRoute
@@ -81,6 +89,7 @@ export interface FileRoutesByTo {
   '/export': typeof publicPublicExportRoute
   '/search': typeof publicPublicSearchRoute
   '/': typeof publicPublicIndexRoute
+  '/auth/callback': typeof publicPublicAuthCallbackRoute
   '/profile/$profileId': typeof publicPublicProfileProfileIdRoute
   '/auth': typeof publicPublicAuthIndexRoute
   '/profile': typeof publicPublicProfileIndexRoute
@@ -93,6 +102,7 @@ export interface FileRoutesById {
   '/(public)/_public/profile': typeof publicPublicProfileRouteWithChildren
   '/(public)/_public/search': typeof publicPublicSearchRoute
   '/(public)/_public/': typeof publicPublicIndexRoute
+  '/(public)/_public/auth/callback': typeof publicPublicAuthCallbackRoute
   '/(public)/_public/profile/$profileId': typeof publicPublicProfileProfileIdRoute
   '/(public)/_public/auth/': typeof publicPublicAuthIndexRoute
   '/(public)/_public/profile/': typeof publicPublicProfileIndexRoute
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/search'
     | '/'
+    | '/auth/callback'
     | '/profile/$profileId'
     | '/auth/'
     | '/profile/'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
     | '/export'
     | '/search'
     | '/'
+    | '/auth/callback'
     | '/profile/$profileId'
     | '/auth'
     | '/profile'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
     | '/(public)/_public/profile'
     | '/(public)/_public/search'
     | '/(public)/_public/'
+    | '/(public)/_public/auth/callback'
     | '/(public)/_public/profile/$profileId'
     | '/(public)/_public/auth/'
     | '/(public)/_public/profile/'
@@ -199,6 +212,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof publicPublicProfileProfileIdRouteImport
       parentRoute: typeof publicPublicProfileRoute
     }
+    '/(public)/_public/auth/callback': {
+      id: '/(public)/_public/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof publicPublicAuthCallbackRouteImport
+      parentRoute: typeof publicPublicRoute
+    }
   }
 }
 
@@ -221,6 +241,7 @@ interface publicPublicRouteChildren {
   publicPublicProfileRoute: typeof publicPublicProfileRouteWithChildren
   publicPublicSearchRoute: typeof publicPublicSearchRoute
   publicPublicIndexRoute: typeof publicPublicIndexRoute
+  publicPublicAuthCallbackRoute: typeof publicPublicAuthCallbackRoute
   publicPublicAuthIndexRoute: typeof publicPublicAuthIndexRoute
 }
 
@@ -230,6 +251,7 @@ const publicPublicRouteChildren: publicPublicRouteChildren = {
   publicPublicProfileRoute: publicPublicProfileRouteWithChildren,
   publicPublicSearchRoute: publicPublicSearchRoute,
   publicPublicIndexRoute: publicPublicIndexRoute,
+  publicPublicAuthCallbackRoute: publicPublicAuthCallbackRoute,
   publicPublicAuthIndexRoute: publicPublicAuthIndexRoute,
 }
 
